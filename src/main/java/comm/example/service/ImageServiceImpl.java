@@ -26,14 +26,12 @@ public class ImageServiceImpl implements ImageService {
     @Override
     @org.springframework.transaction.annotation.Transactional
     public Optional<Image> getImageById(int imageId) {
-
         return imageRepository.findById(imageId);
     }
 
     @Override
     @Transactional
-    public Image createAndUpdateImage(Image image)
-    {
+    public Image createAndUpdateImage(Image image) {
         return imageRepository.save(image);
     }
 

@@ -1,11 +1,16 @@
 package comm.example.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Page {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

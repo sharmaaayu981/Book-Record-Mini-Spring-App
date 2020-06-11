@@ -1,6 +1,6 @@
 package comm.example.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,6 +8,11 @@ import java.util.Set;
 
 @Entity
 @Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

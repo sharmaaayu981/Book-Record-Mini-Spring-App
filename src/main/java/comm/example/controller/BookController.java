@@ -3,7 +3,6 @@ package comm.example.controller;
 import comm.example.dao.BookRepository;
 import comm.example.dao.PageRepository;
 import comm.example.model.Book;
-import comm.example.model.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -27,16 +26,7 @@ public class BookController {
         this.bookRepository = bookRepository;
         this.pageRepository = pageRepository;
     }
-    @GetMapping(value = {"/books"})
-    public ResponseEntity<Iterable<Book>> getAllBooks()
-    {
-        return ResponseEntity.status(HttpStatus.OK).body(bookRepository.findAll());
-    }
-    @GetMapping("/books/{bookId}")
-    public ResponseEntity<Optional<Book>> getBookById(@PathVariable("bookId") int bookId)
-    {
-        return  ResponseEntity.status(HttpStatus.OK).body(bookRepository.findById(bookId));
-    }
+
     @PostMapping("/books")
     @Transactional
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
@@ -44,16 +34,44 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookRepository.save(book));
 
     }
-    @DeleteMapping("/books/{bookId}")
+
+    @PutMapping("/books/")
     @Transactional
-    public ResponseEntity<String> deleteBookById(@PathVariable int bookId){
-    bookRepository.deleteById(bookId);
-    return ResponseEntity.status(HttpStatus.OK).body("Deleted Successfully");
-    }
-    @PutMapping("/books")
     public ResponseEntity<Book> updateBook(@RequestBody Book book)
     {
         return ResponseEntity.status(HttpStatus.OK).body(bookRepository.save(book));
     }
+
+    @GetMapping(value = "/all-books")
+    @Transactional
+    public ResponseEntity<Iterable<Book>> getBook(@RequestBody Book book)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(bookRepository.findAll());
+    }
+
+
+    @GetMapping(value = "/books/{bookId}")
+    @Transactional
+    public ResponseEntity<Optional<Book>> getByBookId(@PathVariable("bookId") int bookId)
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(bookRepository.findById(bookId));
+    }
+
+    @DeleteMapping(value = "/books")
+    @Transactional
+    public ResponseEntity<String> deleteBook(@RequestBody Book book)
+    {
+        bookRepository.delete(book);
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
+    }
+
+    @DeleteMapping(value = "/books/{bookId}")
+    @Transactional
+    public ResponseEntity<String> deleteBookById(@PathVariable("bookId") int bookId)
+    {
+        bookRepository.deleteById(bookId);
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted Using BookId successfully");
+    }
+
 
 }
